@@ -1,15 +1,19 @@
+using E_StoreRestApi.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using E_StoreRestApi.Repositories.Interfaces;
+using E_StoreRestApi.Repositories.Implementations;
 
 namespace E_StoreRestApi
 {
@@ -27,10 +31,15 @@ namespace E_StoreRestApi
         {
 
             services.AddControllers();
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<EStoreDbContext>(options => options.UseSqlite(connection));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_StoreRestApi", Version = "v1" });
             });
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IBrandRepository, BrandRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
