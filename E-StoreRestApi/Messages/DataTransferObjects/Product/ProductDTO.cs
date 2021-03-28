@@ -1,8 +1,4 @@
-﻿using E_StoreRestApi.Models.Product;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace E_StoreRestApi.Messages.DataTransferObjects.Product
 {
@@ -24,10 +20,8 @@ namespace E_StoreRestApi.Messages.DataTransferObjects.Product
         public bool IsBestseller { get; set; }
         public bool IsFeatured { get; set; }
         public long CategoryId { get; set; }
-        public Category Category { get; set; }
         public long BrandId { get; set; }
-        public Brand Brand { get; set; }
-        public ProductStatus ProductStatus { get; set; }
+        public int ProductStatus { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }

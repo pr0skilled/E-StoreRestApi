@@ -1,5 +1,4 @@
-﻿using E_StoreRestApi.Models.Product;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ namespace E_StoreRestApi.Messages.DataTransferObjects.Product
         public string Description { get; set; }
         public string MetaDescription { get; set; }
         public string MetaKeywords { get; set; }
-        public CategoryStatus CategoryStatus { get; set; }
+        public int CategoryStatus { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public DateTimeOffset ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
