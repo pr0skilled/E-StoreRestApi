@@ -22,9 +22,12 @@
 
   <ItemGroup>
 	  <Folder Include="Controllers\" />
-	  <Folder Include="Messages\DataTransferObjects\" />
-	  <Folder Include="Messages\Request\" />
-	  <Folder Include="Messages\Response\" />
+	  <Folder Include="Messages\DataTransferObjects\Shared\" />
+	  <Folder Include="Messages\Request\Product\" />
+	  <Folder Include="Messages\Request\Category\" />
+	  <Folder Include="Messages\Response\Brand\" />
+	  <Folder Include="Messages\Response\Category\" />
+	  <Folder Include="Messages\Response\Product\" />
 	  <Folder Include="Services\Implementations\" />
 	  <Folder Include="Services\Interfaces\" />
   </ItemGroup>
