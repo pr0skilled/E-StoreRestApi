@@ -1,19 +1,16 @@
 using E_StoreRestApi.Database;
+using E_StoreRestApi.Repositories.Implementations;
+using E_StoreRestApi.Repositories.Interfaces;
+using E_StoreRestApi.Services.Implementations;
+using E_StoreRestApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using E_StoreRestApi.Repositories.Interfaces;
-using E_StoreRestApi.Repositories.Implementations;
 
 namespace E_StoreRestApi
 {
@@ -29,7 +26,6 @@ namespace E_StoreRestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<EStoreDbContext>(options => options.UseSqlite(connection));
@@ -40,6 +36,10 @@ namespace E_StoreRestApi
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IBrandRepository, BrandRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IBrandService, BrandService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICatalogueService, CatalogueService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,8 +1,8 @@
 ﻿namespace E_StoreRestApi.Messages.Response.Category
 {
-    using System.Collections.Generic;
     using DataTransferObjects.Product;
-    public class FetchCategoriesResponse:ResponseBase
+    using System.Collections.Generic;
+    public class FetchCategoriesResponse : ResponseBase
     {
         public int CategoriesPerPage { get; set; }
         public bool HasPreviousPages { get; set; }

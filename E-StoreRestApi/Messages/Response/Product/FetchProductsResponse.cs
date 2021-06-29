@@ -1,7 +1,7 @@
 ﻿namespace E_StoreRestApi.Messages.Response.Product
 {
-    using System.Collections.Generic;
     using DataTransferObjects.Product;
+    using System.Collections.Generic;
     public class FetchProductsResponse : ResponseBase
     {
         public int ProductsPerPage { get; set; }

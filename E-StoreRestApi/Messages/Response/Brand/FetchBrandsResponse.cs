@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using E_StoreRestApi.Messages.DataTransferObjects.Product;
+﻿using E_StoreRestApi.Messages.DataTransferObjects.Product;
+using System.Collections.Generic;
 
 namespace E_StoreRestApi.Messages.Response.Brand
 {

@@ -1,10 +1,7 @@
 ﻿using E_StoreRestApi.Database;
 using E_StoreRestApi.Models.Product;
 using E_StoreRestApi.Repositories.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_StoreRestApi.Repositories.Implementations
 {

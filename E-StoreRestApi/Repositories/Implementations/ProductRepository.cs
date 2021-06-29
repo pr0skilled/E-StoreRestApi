@@ -2,10 +2,8 @@
 using E_StoreRestApi.Models.Product;
 using E_StoreRestApi.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_StoreRestApi.Repositories.Implementations
 {
@@ -18,7 +16,7 @@ namespace E_StoreRestApi.Repositories.Implementations
             db = context_;
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IQueryable<Product> GetAllProducts()
         {
             var products = db.Products
                 .Include(p => p.Category)

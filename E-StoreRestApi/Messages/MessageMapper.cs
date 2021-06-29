@@ -1,9 +1,6 @@
 ﻿using E_StoreRestApi.Messages.DataTransferObjects.Product;
 using E_StoreRestApi.Models.Product;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_StoreRestApi.Messages
 {
@@ -21,6 +18,7 @@ namespace E_StoreRestApi.Messages
                 MetaKeywords = brandDTO.MetaKeywords,
                 BrandStatus = (BrandStatus)brandDTO.BrandStatus,
                 ModifiedDate = brandDTO.ModifiedDate,
+                CreateDate = brandDTO.CreateDate,
                 IsDeleted = brandDTO.IsDeleted
             };
 
@@ -40,6 +38,7 @@ namespace E_StoreRestApi.Messages
                 brandDTO.MetaDescription = brand.MetaDescription;
                 brandDTO.MetaKeywords = brand.MetaKeywords;
                 brandDTO.BrandStatus = (int)brand.BrandStatus;
+                brandDTO.CreateDate = brand.CreateDate;
                 brandDTO.ModifiedDate = brand.ModifiedDate;
                 brandDTO.IsDeleted = brand.IsDeleted;
             }
@@ -59,6 +58,7 @@ namespace E_StoreRestApi.Messages
                 MetaKeywords = categoryDTO.MetaKeywords,
                 CategoryStatus = (CategoryStatus)categoryDTO.CategoryStatus,
                 ModifiedDate = categoryDTO.ModifiedDate,
+                CreateDate = categoryDTO.CreateDate,
                 IsDeleted = categoryDTO.IsDeleted
             };
 
@@ -77,6 +77,7 @@ namespace E_StoreRestApi.Messages
                 MetaKeywords = category.MetaKeywords,
                 CategoryStatus = (int)category.CategoryStatus,
                 ModifiedDate = category.ModifiedDate,
+                CreateDate = category.CreateDate,
                 IsDeleted = category.IsDeleted
             };
         }
@@ -139,6 +140,48 @@ namespace E_StoreRestApi.Messages
             };
 
             return productDTO;
+        }
+
+        public List<BrandDTO> MapToBrandDTOs(IEnumerable<Brand> brands)
+        {
+            List<BrandDTO> brandDTOs = new List<BrandDTO>();
+
+            if(brands != null)
+            {
+                foreach(Brand brand in brands)
+                {
+                    brandDTOs.Add(MapToBrandDTO(brand));
+                }
+            }
+            return brandDTOs;   
+        }
+
+        public List<CategoryDTO> MapToCategoryDTOs(IEnumerable<Category> categories)
+        {
+            List<CategoryDTO> categoryDTOs = new List<CategoryDTO>();
+
+            if (categories != null)
+            {
+                foreach (Category category in categories)
+                {
+                    categoryDTOs.Add(MapToCategoryDTO(category));
+                }
+            }
+            return categoryDTOs;
+        }
+
+        public List<ProductDTO> MapToProductDTOs(IEnumerable<Product> products)
+        {
+            List<ProductDTO> productDTOs = new List<ProductDTO>();
+
+            if (products != null)
+            {
+                foreach (Product product in products)
+                {
+                    productDTOs.Add(MapToProductDTO(product));
+                }
+            }
+            return productDTOs;
         }
     }
 }

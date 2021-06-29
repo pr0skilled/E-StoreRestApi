@@ -1,8 +1,4 @@
 ﻿using E_StoreRestApi.Models.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace E_StoreRestApi.Models.Product
 {
