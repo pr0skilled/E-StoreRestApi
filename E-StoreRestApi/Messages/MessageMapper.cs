@@ -1,4 +1,6 @@
-﻿using E_StoreRestApi.Messages.DataTransferObjects.Product;
+﻿using E_StoreRestApi.Messages.DataTransferObjects.Cart;
+using E_StoreRestApi.Messages.DataTransferObjects.Product;
+using E_StoreRestApi.Models.Cart;
 using E_StoreRestApi.Models.Product;
 using System.Collections.Generic;
 
@@ -142,6 +144,68 @@ namespace E_StoreRestApi.Messages
             return productDTO;
         }
 
+        public CartDTO MapToCartDTO(Cart cart)
+        {
+            var cartDTO = new CartDTO();
+            if (cart != null)
+            {
+                cartDTO.Id = cart.Id;
+                cartDTO.UniqueCartId = cart.UniqueCartId;
+                cartDTO.CartStatus = (int)cart.CartStatus;
+                cartDTO.CreateDate = cart.CreateDate;
+                cartDTO.ModifiedDate = cart.ModifiedDate;
+                cartDTO.IsDeleted = cart.IsDeleted;
+            }
+            return cartDTO;
+        }
+
+        public Cart MapToCart(CartDTO cartDTO)
+        {
+            var cart = new Cart();
+
+            if (cartDTO != null)
+            {
+                cart.Id = cartDTO.Id;
+                cart.UniqueCartId = cartDTO.UniqueCartId;
+                cart.CartStatus = (CartStatus)cartDTO.CartStatus;
+                cart.CreateDate = cartDTO.CreateDate;
+                cart.ModifiedDate = cartDTO.ModifiedDate;
+                cart.IsDeleted = cartDTO.IsDeleted;
+            };
+
+            return cart;
+        }
+
+        public CartItemDTO MapToCartItemDTO(CartItem cartItem)
+        {
+            CartItemDTO cartItemDTO = null;
+
+            if (cartItem.Product != null)
+            {
+                var productDTO = MapToProductDTO(cartItem.Product);
+
+                cartItemDTO = new CartItemDTO
+                {
+                    Id = cartItem.Id,
+                    CartId = cartItem.CartId,
+                    Product = productDTO,
+                    Quantity = cartItem.Quantity
+                };
+            }
+
+            return cartItemDTO;
+        }
+
+        public CartItem MapToCartItem(CartItemDTO cartItemDTO)
+        {
+            return new CartItem
+            {
+                CartId = cartItemDTO.CartId,
+                ProductId = cartItemDTO.Product.Id,
+                Quantity = cartItemDTO.Quantity
+            };
+        }
+
         public List<BrandDTO> MapToBrandDTOs(IEnumerable<Brand> brands)
         {
             List<BrandDTO> brandDTOs = new List<BrandDTO>();
@@ -182,6 +246,17 @@ namespace E_StoreRestApi.Messages
                 }
             }
             return productDTOs;
+        }
+
+        public List<CartItemDTO> MapToCartItemDTOs(IEnumerable<CartItem> cartItems)
+        {
+            var cartItemDTOs = new List<CartItemDTO>();
+            foreach (var cartItem in cartItems)
+            {
+                var cartItemDTO = MapToCartItemDTO(cartItem);
+                cartItemDTOs.Add(cartItemDTO);
+            }
+            return cartItemDTOs;
         }
     }
 }

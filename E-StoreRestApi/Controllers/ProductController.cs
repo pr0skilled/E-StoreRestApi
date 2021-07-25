@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using E_StoreRestApi.Messages.Request.Product;
+﻿using E_StoreRestApi.Messages.Request.Product;
 using E_StoreRestApi.Messages.Response.Product;
 using E_StoreRestApi.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_StoreRestApi.Controllers

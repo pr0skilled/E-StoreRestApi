@@ -1,10 +1,9 @@
-﻿using System;
+﻿using E_StoreRestApi.Models.Shared;
 
 namespace E_StoreRestApi.Messages.DataTransferObjects.Product
 {
-    public class ProductDTO
+    public class ProductDTO : BaseObject
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public string Slug { get; set; }
         public string Description { get; set; }
@@ -22,8 +21,5 @@ namespace E_StoreRestApi.Messages.DataTransferObjects.Product
         public long CategoryId { get; set; }
         public long BrandId { get; set; }
         public int ProductStatus { get; set; }
-        public DateTimeOffset CreateDate { get; set; }
-        public DateTimeOffset ModifiedDate { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

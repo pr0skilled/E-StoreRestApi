@@ -5,11 +5,11 @@ using E_StoreRestApi.Services.Implementations;
 using E_StoreRestApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace E_StoreRestApi
@@ -33,13 +33,23 @@ namespace E_StoreRestApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_StoreRestApi", Version = "v1" });
             });
+
+            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IBrandRepository, BrandRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ICartRepository, CartRepository>();
+            services.AddTransient<ICartItemRepository, CartItemRepository>();
+
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IBrandService, BrandService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICatalogueService, CatalogueService>();
+            services.AddTransient<ICartService, CartService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +63,8 @@ namespace E_StoreRestApi
             }
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

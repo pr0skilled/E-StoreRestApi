@@ -2,7 +2,6 @@
 using E_StoreRestApi.Models.Product;
 using E_StoreRestApi.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace E_StoreRestApi.Repositories.Implementations

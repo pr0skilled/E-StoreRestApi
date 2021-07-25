@@ -49,6 +49,7 @@ namespace E_StoreRestApi.Services.Implementations
             {
                 Brand brand = messageMapper.MapToBrand(updateBrandRequest.Brand);
                 if (brand == null) throw new Exception();
+                brand.ModifiedDate = DateTimeOffset.Now;
                 brandRepository.UpdateBrand(brand);
                 response.StatusCode = HttpStatusCode.OK;
             }
@@ -112,8 +113,8 @@ namespace E_StoreRestApi.Services.Implementations
             if (brandRequest.Brand != null) 
             {
                 Brand brand = messageMapper.MapToBrand(brandRequest.Brand);
-                brand.CreateDate = DateTime.Now;
-                brand.ModifiedDate = DateTime.Now;
+                brand.CreateDate = DateTimeOffset.Now;
+                brand.ModifiedDate = DateTimeOffset.Now;
                 brandRepository.AddBrand(brand);
                 BrandDTO brandDTO = messageMapper.MapToBrandDTO(brand);
                 response.Brand = brandDTO;

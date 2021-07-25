@@ -7,7 +7,7 @@ using E_StoreRestApi.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace E_StoreRestApi.Services.Implementations
 {
@@ -23,7 +23,6 @@ namespace E_StoreRestApi.Services.Implementations
         }
         public FetchProductsResponse FetchProducts(FetchProductsRequest fetchProductsRequest)
         {
-
             IEnumerable<Product> products = new List<Product>();
 
             int productCount = 0;
@@ -78,11 +77,16 @@ namespace E_StoreRestApi.Services.Implementations
             {
                 ProductsPerPage = fetchProductsRequest.ProductsPerPage,
                 Products = productDtos,
-                HasPreviousPages = (fetchProductsRequest.PageNumber > 1),
+                HasPreviousPages = fetchProductsRequest.PageNumber > 1,
                 CurrentPage = fetchProductsRequest.PageNumber,
-                HasNextPages = (fetchProductsRequest.PageNumber < totalPages),
+                HasNextPages = fetchProductsRequest.PageNumber < totalPages,
                 Pages = pages
             };
+
+            if (fetchProductsResponse.CurrentPage > pages.Length)
+            {
+                fetchProductsResponse.StatusCode = HttpStatusCode.NoContent;
+            }
 
             return fetchProductsResponse;
         }

@@ -9,14 +9,73 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_StoreRestApi.Migrations
 {
     [DbContext(typeof(EStoreDbContext))]
-    [Migration("20210326124642_ProductCatalogue")]
-    partial class ProductCatalogue
+    [Migration("20210711152731_ShoppingCart")]
+    partial class ShoppingCart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.4");
+                .HasAnnotation("ProductVersion", "5.0.7");
+
+            modelBuilder.Entity("E_StoreRestApi.Models.Cart.Cart", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CartStatus")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("CreateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("ModifiedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UniqueCartId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("E_StoreRestApi.Models.Cart.CartItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CartId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("CreateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset>("ModifiedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
+                });
 
             modelBuilder.Entity("E_StoreRestApi.Models.Product.Brand", b =>
                 {
@@ -169,6 +228,25 @@ namespace E_StoreRestApi.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("E_StoreRestApi.Models.Cart.CartItem", b =>
+                {
+                    b.HasOne("E_StoreRestApi.Models.Cart.Cart", "Cart")
+                        .WithMany("CartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_StoreRestApi.Models.Product.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("E_StoreRestApi.Models.Product.Product", b =>
                 {
                     b.HasOne("E_StoreRestApi.Models.Product.Brand", "Brand")
@@ -186,6 +264,11 @@ namespace E_StoreRestApi.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("E_StoreRestApi.Models.Cart.Cart", b =>
+                {
+                    b.Navigation("CartItems");
                 });
 #pragma warning restore 612, 618
         }

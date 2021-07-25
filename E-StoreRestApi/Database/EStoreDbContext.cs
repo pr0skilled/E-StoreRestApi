@@ -1,4 +1,5 @@
-﻿using E_StoreRestApi.Models.Product;
+﻿using E_StoreRestApi.Models.Cart;
+using E_StoreRestApi.Models.Product;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_StoreRestApi.Database
@@ -10,5 +11,7 @@ namespace E_StoreRestApi.Database
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }

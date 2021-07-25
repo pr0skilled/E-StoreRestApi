@@ -49,6 +49,7 @@ namespace E_StoreRestApi.Services.Implementations
             {
                 Category category = messageMapper.MapToCategory(updateCategoryRequest.Category);
                 if (category == null) throw new Exception();
+                category.ModifiedDate = DateTimeOffset.Now;
                 categoryRepository.UpdateCategory(category);
                 response.StatusCode = HttpStatusCode.OK;
             }
@@ -112,8 +113,8 @@ namespace E_StoreRestApi.Services.Implementations
             if (createCategoryRequest.Category != null)
             {
                 Category category = messageMapper.MapToCategory(createCategoryRequest.Category);
-                category.CreateDate = DateTime.Now;
-                category.ModifiedDate = DateTime.Now;
+                category.CreateDate = DateTimeOffset.Now;
+                category.ModifiedDate = DateTimeOffset.Now;
                 categoryRepository.AddCategory(category);
                 CategoryDTO categoryDTO = messageMapper.MapToCategoryDTO(category);
                 response.Category = categoryDTO;

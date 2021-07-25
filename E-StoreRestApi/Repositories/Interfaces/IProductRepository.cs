@@ -1,5 +1,4 @@
 ﻿using E_StoreRestApi.Models.Product;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace E_StoreRestApi.Repositories.Interfaces

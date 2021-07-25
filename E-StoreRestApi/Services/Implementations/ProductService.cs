@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using E_StoreRestApi.Messages;
 using E_StoreRestApi.Messages.DataTransferObjects.Product;
@@ -30,6 +28,7 @@ namespace E_StoreRestApi.Services.Implementations
             try
             {
                 Product product = productRepository.GetProductById(deleteProductRequest.Id);
+                if (product == null) throw new Exception();
                 productRepository.DeleteProduct(product);
                 ProductDTO productDTO = messageMapper.MapToProductDTO(product);
                 response.Product = productDTO;
@@ -49,6 +48,8 @@ namespace E_StoreRestApi.Services.Implementations
             try
             {
                 Product product = messageMapper.MapToProduct(updateProductRequest.Product);
+                if (product == null) throw new Exception();
+                product.ModifiedDate = DateTimeOffset.Now;
                 productRepository.UpdateProduct(product);
                 response.StatusCode = HttpStatusCode.OK;
             }
@@ -66,6 +67,7 @@ namespace E_StoreRestApi.Services.Implementations
             try
             {
                 Product product = productRepository.GetProductById(getProductRequest.Id);
+                if (product == null) throw new Exception();
                 ProductDTO productDTO = messageMapper.MapToProductDTO(product);
                 response.Product = productDTO;
                 response.StatusCode = HttpStatusCode.OK;
@@ -80,25 +82,38 @@ namespace E_StoreRestApi.Services.Implementations
 
         public FetchProductsResponse GetProducts(FetchProductsRequest fetchProductsRequest)
         {
-            var fetchProductsResponse = catalogueService.FetchProducts(fetchProductsRequest);
-            return fetchProductsResponse;
+            var response = new FetchProductsResponse();
+            try
+            {
+                response = catalogueService.FetchProducts(fetchProductsRequest);
+                if (response == null) throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.Messages.Add(ex.Message);
+            }
+            return response;
         }
 
         public CreateProductResponse SaveProduct(CreateProductRequest createProductRequest)
         {
             var response = new CreateProductResponse();
-            if (createProductRequest.Product != null)
+            try
             {
+                if (createProductRequest.Product != null) throw new Exception();
                 Product product = messageMapper.MapToProduct(createProductRequest.Product);
+                product.CreateDate = DateTimeOffset.Now;
+                product.ModifiedDate = DateTimeOffset.Now;
                 productRepository.AddProduct(product);
                 ProductDTO productDTO = messageMapper.MapToProductDTO(product);
                 response.Product = productDTO;
                 response.StatusCode = HttpStatusCode.Created;
             }
-            else
+            catch (Exception ex)
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
-                response.Messages.Add("Product is null");
+                response.Messages.Add(ex.Message);
             }
             return response;
         }
