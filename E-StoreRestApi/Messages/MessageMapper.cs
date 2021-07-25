@@ -1,5 +1,7 @@
-﻿using E_StoreRestApi.Messages.DataTransferObjects.Cart;
+﻿using E_StoreRestApi.Messages.DataTransferObjects.Address;
+using E_StoreRestApi.Messages.DataTransferObjects.Cart;
 using E_StoreRestApi.Messages.DataTransferObjects.Product;
+using E_StoreRestApi.Models.Address;
 using E_StoreRestApi.Models.Cart;
 using E_StoreRestApi.Models.Product;
 using System.Collections.Generic;
@@ -206,6 +208,49 @@ namespace E_StoreRestApi.Messages
             };
         }
 
+        public AddressDTO MapToAddressDto(Address address)
+        {
+            var addressDto = new AddressDTO();
+
+            if (address != null)
+            {
+                addressDto.Id = address.Id;
+                addressDto.Name = address.Name;
+                addressDto.AddressLine1 = address.AddressLine1;
+                addressDto.AddressLine2 = address.AddressLine2;
+                addressDto.City = address.City;
+                addressDto.Country = address.Country;
+                addressDto.State = address.State;
+                addressDto.ZipCode = address.ZipCode;
+                addressDto.CreateDate = address.CreateDate;
+                addressDto.ModifiedDate = address.ModifiedDate;
+                addressDto.IsDeleted = address.IsDeleted;
+
+            };
+
+            return addressDto;
+        }
+
+        public Address MapToAddress(AddressDTO addressDto)
+        {
+            var address = new Address();
+            if (addressDto != null)
+            {
+                address.Id = addressDto.Id;
+                address.Name = addressDto.Name;
+                address.AddressLine1 = addressDto.AddressLine1;
+                address.AddressLine2 = addressDto.AddressLine2;
+                address.City = addressDto.City;
+                address.Country = addressDto.Country;
+                address.State = addressDto.State;
+                address.ZipCode = addressDto.ZipCode;
+                address.CreateDate = addressDto.CreateDate;
+                address.ModifiedDate = addressDto.ModifiedDate;
+                address.IsDeleted = addressDto.IsDeleted;
+            };
+            return address;
+        }
+
         public List<BrandDTO> MapToBrandDTOs(IEnumerable<Brand> brands)
         {
             List<BrandDTO> brandDTOs = new List<BrandDTO>();
@@ -257,6 +302,17 @@ namespace E_StoreRestApi.Messages
                 cartItemDTOs.Add(cartItemDTO);
             }
             return cartItemDTOs;
+        }
+
+        public List<AddressDTO> MapToAddressDtos(IEnumerable<Address> addresses)
+        {
+            var addressDtos = new List<AddressDTO>();
+            foreach (var address in addresses)
+            {
+                var addressDto = MapToAddressDto(address);
+                addressDtos.Add(addressDto);
+            }
+            return addressDtos;
         }
     }
 }
