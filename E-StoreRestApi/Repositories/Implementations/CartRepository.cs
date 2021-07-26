@@ -7,41 +7,41 @@ namespace E_StoreRestApi.Repositories.Implementations
 {
     public class CartRepository : ICartRepository
     {
-        private EStoreDbContext context;
+        private EStoreDbContext db;
 
         public CartRepository(EStoreDbContext context_)
         {
-            context = context_;
+            db = context_;
         }
 
         public Cart FindCartById(long id)
         {
-            var cart = context.Carts.Find(id);
+            var cart = db.Carts.Find(id);
             return cart;
         }
 
         public IEnumerable<Cart> GetAllCarts()
         {
-            var carts = context.Carts;
+            var carts = db.Carts;
             return carts;
         }
 
         public void SaveCart(Cart cart)
         {
-            context.Carts.Add(cart);
-            context.SaveChanges();
+            db.Carts.Add(cart);
+            db.SaveChanges();
         }
 
         public void UpdateCart(Cart cart)
         {
-            context.Carts.Update(cart);
-            context.SaveChanges();
+            db.Carts.Update(cart);
+            db.SaveChanges();
         }
 
         public void DeleteCart(Cart cart)
         {
-            context.Carts.Remove(cart);
-            context.SaveChanges();
+            db.Carts.Remove(cart);
+            db.SaveChanges();
         }
     }
 }
