@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <Folder Include="Messages\DataTransferObjects\Shared\" />
 	  <Folder Include="Messages\Request\Product\" />
 	  <Folder Include="Messages\Request\Category\" />
 	  <Folder Include="Messages\Response\Brand\" />

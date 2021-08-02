@@ -1,4 +1,5 @@
 using E_StoreRestApi.Database;
+using E_StoreRestApi.Models.Shared;
 using E_StoreRestApi.Repositories.Implementations;
 using E_StoreRestApi.Repositories.Interfaces;
 using E_StoreRestApi.Services.Implementations;
@@ -6,6 +7,7 @@ using E_StoreRestApi.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,8 +29,11 @@ namespace E_StoreRestApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<EStoreDbContext>(options => options.UseSqlite(connection));
+            string eStoreDbConnection = Configuration.GetConnectionString("DefaultConnection");
+            string identityDbConnection = Configuration.GetConnectionString("EStoreIdentity");
+            services.AddDbContext<EStoreDbContext>(options => options.UseSqlite(eStoreDbConnection));
+            services.AddDbContext<EStoreIdentityDbContext>(options => options.UseSqlite(eStoreDbConnection));
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<EStoreIdentityDbContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "E_StoreRestApi", Version = "v1" });
