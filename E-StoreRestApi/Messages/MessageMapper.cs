@@ -1,9 +1,15 @@
 ﻿using E_StoreRestApi.Messages.DataTransferObjects.Address;
 using E_StoreRestApi.Messages.DataTransferObjects.Cart;
+using E_StoreRestApi.Messages.DataTransferObjects.Customer;
+using E_StoreRestApi.Messages.DataTransferObjects.Order;
 using E_StoreRestApi.Messages.DataTransferObjects.Product;
+using E_StoreRestApi.Messages.DataTransferObjects.Shared;
 using E_StoreRestApi.Models.Address;
 using E_StoreRestApi.Models.Cart;
+using E_StoreRestApi.Models.Customer;
+using E_StoreRestApi.Models.Order;
 using E_StoreRestApi.Models.Product;
+using E_StoreRestApi.Models.Shared;
 using System.Collections.Generic;
 
 namespace E_StoreRestApi.Messages
@@ -22,7 +28,6 @@ namespace E_StoreRestApi.Messages
                 MetaKeywords = brandDTO.MetaKeywords,
                 BrandStatus = (BrandStatus)brandDTO.BrandStatus,
                 ModifiedDate = brandDTO.ModifiedDate,
-                CreateDate = brandDTO.CreateDate,
                 IsDeleted = brandDTO.IsDeleted
             };
 
@@ -42,7 +47,6 @@ namespace E_StoreRestApi.Messages
                 brandDTO.MetaDescription = brand.MetaDescription;
                 brandDTO.MetaKeywords = brand.MetaKeywords;
                 brandDTO.BrandStatus = (int)brand.BrandStatus;
-                brandDTO.CreateDate = brand.CreateDate;
                 brandDTO.ModifiedDate = brand.ModifiedDate;
                 brandDTO.IsDeleted = brand.IsDeleted;
             }
@@ -62,7 +66,6 @@ namespace E_StoreRestApi.Messages
                 MetaKeywords = categoryDTO.MetaKeywords,
                 CategoryStatus = (CategoryStatus)categoryDTO.CategoryStatus,
                 ModifiedDate = categoryDTO.ModifiedDate,
-                CreateDate = categoryDTO.CreateDate,
                 IsDeleted = categoryDTO.IsDeleted
             };
 
@@ -81,7 +84,6 @@ namespace E_StoreRestApi.Messages
                 MetaKeywords = category.MetaKeywords,
                 CategoryStatus = (int)category.CategoryStatus,
                 ModifiedDate = category.ModifiedDate,
-                CreateDate = category.CreateDate,
                 IsDeleted = category.IsDeleted
             };
         }
@@ -208,87 +210,223 @@ namespace E_StoreRestApi.Messages
             };
         }
 
-        public AddressDTO MapToAddressDto(Address address)
+        public AddressDTO MapToAddressDTO(Address address)
         {
-            var addressDto = new AddressDTO();
+            var addressDTO = new AddressDTO();
 
             if (address != null)
             {
-                addressDto.Id = address.Id;
-                addressDto.Name = address.Name;
-                addressDto.AddressLine1 = address.AddressLine1;
-                addressDto.AddressLine2 = address.AddressLine2;
-                addressDto.City = address.City;
-                addressDto.Country = address.Country;
-                addressDto.State = address.State;
-                addressDto.ZipCode = address.ZipCode;
-                addressDto.CreateDate = address.CreateDate;
-                addressDto.ModifiedDate = address.ModifiedDate;
-                addressDto.IsDeleted = address.IsDeleted;
+                addressDTO.Id = address.Id;
+                addressDTO.Name = address.Name;
+                addressDTO.AddressLine1 = address.AddressLine1;
+                addressDTO.AddressLine2 = address.AddressLine2;
+                addressDTO.City = address.City;
+                addressDTO.Country = address.Country;
+                addressDTO.State = address.State;
+                addressDTO.ZipCode = address.ZipCode;
+                addressDTO.CreateDate = address.CreateDate;
+                addressDTO.ModifiedDate = address.ModifiedDate;
+                addressDTO.IsDeleted = address.IsDeleted;
 
             };
 
-            return addressDto;
+            return addressDTO;
         }
 
-        public Address MapToAddress(AddressDTO addressDto)
+        public Address MapToAddress(AddressDTO addressDTO)
         {
             var address = new Address();
-            if (addressDto != null)
+            if (addressDTO != null)
             {
-                address.Id = addressDto.Id;
-                address.Name = addressDto.Name;
-                address.AddressLine1 = addressDto.AddressLine1;
-                address.AddressLine2 = addressDto.AddressLine2;
-                address.City = addressDto.City;
-                address.Country = addressDto.Country;
-                address.State = addressDto.State;
-                address.ZipCode = addressDto.ZipCode;
-                address.CreateDate = addressDto.CreateDate;
-                address.ModifiedDate = addressDto.ModifiedDate;
-                address.IsDeleted = addressDto.IsDeleted;
+                address.Id = addressDTO.Id;
+                address.Name = addressDTO.Name;
+                address.AddressLine1 = addressDTO.AddressLine1;
+                address.AddressLine2 = addressDTO.AddressLine2;
+                address.City = addressDTO.City;
+                address.Country = addressDTO.Country;
+                address.State = addressDTO.State;
+                address.ZipCode = addressDTO.ZipCode;
+                address.CreateDate = addressDTO.CreateDate;
+                address.ModifiedDate = addressDTO.ModifiedDate;
+                address.IsDeleted = addressDTO.IsDeleted;
             };
             return address;
         }
 
+        public CustomerDTO MapToCustomerDTO(Customer customer)
+        {
+            var customerDTO = new CustomerDTO
+            {
+                Id = customer.Id,
+                FirstName = customer.Person.FirstName,
+                MiddleName = customer.Person.MiddleName,
+                LastName = customer.Person.LastName,
+                EmailAddress = customer.Person.EmailAddress,
+                PhoneNumber = customer.Person.PhoneNumber,
+                Gender = (int)customer.Person.Gender,
+                DateOfBirth = customer.Person.DateOfBirth,
+                CreateDate = customer.CreateDate,
+                ModifiedDate = customer.ModifiedDate,
+                IsDeleted = customer.IsDeleted
+            };
+
+            return customerDTO;
+        }
+        public Customer MapToCustomer(CustomerDTO customerDTO)
+        {
+            var person = new Person
+            {
+                Id = customerDTO.Id,
+                FirstName = customerDTO.FirstName,
+                MiddleName = customerDTO.MiddleName,
+                LastName = customerDTO.LastName,
+                EmailAddress = customerDTO.EmailAddress,
+                PhoneNumber = customerDTO.PhoneNumber,
+                Gender = (Gender)customerDTO.Gender,
+                DateOfBirth = customerDTO.DateOfBirth,
+                CreateDate = customerDTO.CreateDate,
+                ModifiedDate = customerDTO.ModifiedDate,
+                IsDeleted = customerDTO.IsDeleted
+            };
+
+            return new Customer
+            {
+                Id = customerDTO.Id,
+                Person = person
+            };
+        }
+
+        public PersonDTO MapToPersonDTO(Person person)
+        {
+            var personDTO = new PersonDTO
+            {
+                Id = person.Id,
+                FirstName = person.FirstName,
+                MiddleName = person.MiddleName,
+                LastName = person.LastName,
+                EmailAddress = person.EmailAddress,
+                PhoneNumber = person.PhoneNumber,
+                Gender = (int)person.Gender,
+                DateOfBirth = person.DateOfBirth,
+                CreateDate = person.CreateDate,
+                ModifiedDate = person.ModifiedDate,
+                IsDeleted = person.IsDeleted
+            };
+
+            return personDTO;
+        }
+
+        public Person MapToPerson(PersonDTO personDTO)
+        {
+            return new Person
+            {
+                Id = personDTO.Id,
+                FirstName = personDTO.FirstName,
+                MiddleName = personDTO.MiddleName,
+                LastName = personDTO.LastName,
+                EmailAddress = personDTO.EmailAddress,
+                PhoneNumber = personDTO.PhoneNumber,
+                Gender = (Gender)personDTO.Gender,
+                DateOfBirth = personDTO.DateOfBirth,
+                CreateDate = personDTO.CreateDate,
+                ModifiedDate = personDTO.ModifiedDate,
+                IsDeleted = personDTO.IsDeleted
+            };
+        }
+
+        public OrderDTO MapToOrderDTO(Order order)
+        {
+            var orderDTO = new OrderDTO
+            {
+                Id = order.Id,
+                OrderTotal = order.OrderTotal,
+                OrderItemTotal = order.OrderTotal,
+                ShippingCharge = order.ShippingCharge,
+                CustomerId = order.CustomerId,
+                OrderStatus = (int)order.OrderStatus,
+                CreateDate = order.CreateDate,
+                ModifiedDate = order.ModifiedDate,
+                IsDeleted = order.IsDeleted
+            };
+
+            return orderDTO;
+        }
+
+        public Order MapToOrder(OrderDTO orderDTO)
+        {
+            return new Order
+            {
+                Id = orderDTO.Id,
+                OrderTotal = orderDTO.OrderTotal,
+                OrderItemTotal = orderDTO.OrderTotal,
+                ShippingCharge = orderDTO.ShippingCharge,
+                CustomerId = orderDTO.CustomerId,
+                OrderStatus = (OrderStatus)orderDTO.OrderStatus,
+                CreateDate = orderDTO.CreateDate,
+                ModifiedDate = orderDTO.ModifiedDate,
+                IsDeleted = orderDTO.IsDeleted
+            };
+        }
+
+        public OrderItemDTO MapToOrderItemDTO(OrderItem orderItem)
+        {
+            OrderItemDTO orderItemDTO = null;
+
+            if (orderItem?.Product != null)
+            {
+                var productDTO = MapToProductDTO(orderItem.Product);
+
+                orderItemDTO = new OrderItemDTO
+                {
+                    Id = orderItem.Id,
+                    OrderId = orderItem.OrderId,
+                    Product = productDTO,
+                    Quantity = orderItem.Quantity
+                };
+            }
+
+            return orderItemDTO;
+        }
+
+        public OrderItem MapToOrderItem(OrderItemDTO orderItemDTO)
+        {
+            return new OrderItem
+            {
+                OrderId = orderItemDTO.OrderId,
+                ProductId = orderItemDTO.Product.Id,
+                Quantity = orderItemDTO.Quantity
+            };
+        }
+
         public List<BrandDTO> MapToBrandDTOs(IEnumerable<Brand> brands)
         {
-            List<BrandDTO> brandDTOs = new List<BrandDTO>();
-
-            if(brands != null)
+            var brandDTOs = new List<BrandDTO>();
+            foreach (var brand in brands)
             {
-                foreach(Brand brand in brands)
-                {
-                    brandDTOs.Add(MapToBrandDTO(brand));
-                }
+                var brandDTO = MapToBrandDTO(brand);
+                brandDTOs.Add(brandDTO);
             }
-            return brandDTOs;   
+            return brandDTOs;
         }
 
         public List<CategoryDTO> MapToCategoryDTOs(IEnumerable<Category> categories)
         {
-            List<CategoryDTO> categoryDTOs = new List<CategoryDTO>();
-
-            if (categories != null)
+            var categoryDTOs = new List<CategoryDTO>();
+            foreach (var category in categories)
             {
-                foreach (Category category in categories)
-                {
-                    categoryDTOs.Add(MapToCategoryDTO(category));
-                }
+                var categoryDTO = MapToCategoryDTO(category);
+                categoryDTOs.Add(categoryDTO);
             }
             return categoryDTOs;
         }
 
         public List<ProductDTO> MapToProductDTOs(IEnumerable<Product> products)
         {
-            List<ProductDTO> productDTOs = new List<ProductDTO>();
-
-            if (products != null)
+            var productDTOs = new List<ProductDTO>();
+            foreach (var product in products)
             {
-                foreach (Product product in products)
-                {
-                    productDTOs.Add(MapToProductDTO(product));
-                }
+                var productDTO = MapToProductDTO(product);
+                productDTOs.Add(productDTO);
             }
             return productDTOs;
         }
@@ -303,16 +441,15 @@ namespace E_StoreRestApi.Messages
             }
             return cartItemDTOs;
         }
-
-        public List<AddressDTO> MapToAddressDtos(IEnumerable<Address> addresses)
+        public List<AddressDTO> MapToAddressDTOs(IEnumerable<Address> addresses)
         {
-            var addressDtos = new List<AddressDTO>();
+            var addressDTOs = new List<AddressDTO>();
             foreach (var address in addresses)
             {
-                var addressDto = MapToAddressDto(address);
-                addressDtos.Add(addressDto);
+                var addressDTO = MapToAddressDTO(address);
+                addressDTOs.Add(addressDTO);
             }
-            return addressDtos;
+            return addressDTOs;
         }
     }
 }

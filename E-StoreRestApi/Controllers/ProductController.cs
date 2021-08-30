@@ -1,10 +1,12 @@
 ﻿using E_StoreRestApi.Messages.Request.Product;
 using E_StoreRestApi.Messages.Response.Product;
 using E_StoreRestApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_StoreRestApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -15,6 +17,7 @@ namespace E_StoreRestApi.Controllers
             _productService = productService;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<GetProductResponse> GetProduct(long id)
         {
@@ -26,6 +29,7 @@ namespace E_StoreRestApi.Controllers
             return getProductResponse;
         }
 
+        [AllowAnonymous]
         [HttpGet("{categorySlug}/{brandSlug}/{page}/{productsPerPage}")]
         public ActionResult<FetchProductsResponse> GetProducts(string categorySlug, string brandSlug, int page, int productsPerPage)
         {
@@ -40,6 +44,7 @@ namespace E_StoreRestApi.Controllers
             return fetchProductsResponse;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<CreateProductResponse> PostProduct(CreateProductRequest createProductRequest)
         {
@@ -47,6 +52,7 @@ namespace E_StoreRestApi.Controllers
             return createProductResponse;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPut()]
         public ActionResult<UpdateProductResponse> PutProduct(UpdateProductRequest updateProductRequest)
         {
@@ -54,6 +60,7 @@ namespace E_StoreRestApi.Controllers
             return updateProductResponse;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<DeleteProductResponse> DeleteProduct(long id)
         {

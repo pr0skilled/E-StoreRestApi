@@ -20,7 +20,7 @@ namespace E_StoreRestApi.Services.Implementations
         private MessageMapper messageMapper;
         private readonly HttpContext httpContext;
         private readonly IProductRepository productRepository;
-        public CartService( 
+        public CartService(
             IHttpContextAccessor httpContextAccessor_,
             ICartRepository cartRepository_,
             ICartItemRepository cartItemRepository_,
@@ -118,10 +118,10 @@ namespace E_StoreRestApi.Services.Implementations
                 if (cart == null)
                     throw new Exception("Cart is null");
                 var cartItems = cartItemRepository.FindCartItemsByCartId(cart.Id);
-                var cartItemsDto = messageMapper.MapToCartItemDTOs(cartItems);
-                var cartDto = messageMapper.MapToCartDTO(cart);
-                cartDto.CartItems = cartItemsDto;
-                response.Cart = cartDto;
+                var cartItemsDTO = messageMapper.MapToCartItemDTOs(cartItems);
+                var cartDTO = messageMapper.MapToCartDTO(cart);
+                cartDTO.CartItems = cartItemsDTO;
+                response.Cart = cartDTO;
                 response.StatusCode = System.Net.HttpStatusCode.OK;
             }
             catch (Exception ex)

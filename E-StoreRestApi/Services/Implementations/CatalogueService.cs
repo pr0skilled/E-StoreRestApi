@@ -71,12 +71,12 @@ namespace E_StoreRestApi.Services.Implementations
 
             int[] pages = Enumerable.Range(1, totalPages).ToArray();
 
-            var productDtos = _messageMapper.MapToProductDTOs(products);
+            var productDTOs = _messageMapper.MapToProductDTOs(products);
 
             var fetchProductsResponse = new FetchProductsResponse()
             {
                 ProductsPerPage = fetchProductsRequest.ProductsPerPage,
-                Products = productDtos,
+                Products = productDTOs,
                 HasPreviousPages = fetchProductsRequest.PageNumber > 1,
                 CurrentPage = fetchProductsRequest.PageNumber,
                 HasNextPages = fetchProductsRequest.PageNumber < totalPages,

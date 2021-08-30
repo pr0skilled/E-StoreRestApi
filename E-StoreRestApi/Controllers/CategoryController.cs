@@ -1,10 +1,12 @@
 ﻿using E_StoreRestApi.Messages.Request.Category;
 using E_StoreRestApi.Messages.Response.Category;
 using E_StoreRestApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_StoreRestApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -15,6 +17,7 @@ namespace E_StoreRestApi.Controllers
             _categoryService = categoryService;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<GetCategoryResponse> GetCategory(long id)
         {
@@ -26,6 +29,7 @@ namespace E_StoreRestApi.Controllers
             return getCategoryResponse;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<FetchCategoriesResponse> GetCategories()
         {
@@ -34,6 +38,7 @@ namespace E_StoreRestApi.Controllers
             return fetchCategoriesResponse;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<CreateCategoryResponse> PostCategory(CreateCategoryRequest createCategoryRequest)
         {
@@ -41,6 +46,7 @@ namespace E_StoreRestApi.Controllers
             return createCategoryResponse;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPut()]
         public ActionResult<UpdateCategoryResponse> PutCategory(UpdateCategoryRequest updateCategoryRequest)
         {
@@ -48,6 +54,7 @@ namespace E_StoreRestApi.Controllers
             return updateCategoryResponse;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<DeleteCategoryResponse> DeleteCategory(long id)
         {
